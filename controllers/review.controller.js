@@ -50,11 +50,11 @@ const updateReview = async (req, res) => {
       return res
         .status(400)
         .json({ status: false, message: "Rating and comment are required" });
-    }
+    };
 
     // Find and update the review
     const review = await Review.findOneAndUpdate(
-      { _id: req.params.id, user: req.user.id },
+      { _id: req.params.id, user: req.user._id },
       req.body,
       { new: true }
     );
@@ -80,7 +80,7 @@ const deleteReview = async (req, res) => {
     // Find and delete the review
     const review = await Review.findOneAndDelete({
       _id: req.params.id,
-      user: req.user.id,
+      user: req.user._id,
     });
     if (!review) {
       return res
